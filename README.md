@@ -33,15 +33,26 @@ Suggested order: basics → conversations → prompting → advanced. Notebooks 
 
 ## Shared helpers
 
-`src/utils/client.py` loads `.env`, creates the client and provides `chat()` and message helpers.
+`src/utils/claude_api_client.py` provides `ClaudeClient`, a thin wrapper around the Anthropic SDK
+that loads `.env` and holds default settings (model, `max_tokens`, system prompt).
 After `pip install -r requirements.txt` it can be imported from any notebook:
 
 ```python
-from utils import client, chat, add_user_message, add_assistant_message
+from utils import ClaudeClient
+
+claude = ClaudeClient()                      # optional: model=, max_tokens=, system=
+claude.ask("Define quantum computing in one sentence")   # -> str
 
 messages = []
-add_user_message(messages, "Define quantum computing in one sentence")
-chat(messages)
+claude.add_user_message(messages, "Name a prime number")
+reply = claude.chat(messages)                # -> str
+claude.add_assistant_message(messages, reply)
+
+for chunk in claude.stream(messages):        # streamed text
+    print(chunk, end="")
+
+claude.create(messages)                      # full SDK Message object
+claude.client                                # raw Anthropic client
 ```
 
 ## Project layout
