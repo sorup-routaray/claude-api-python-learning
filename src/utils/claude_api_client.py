@@ -25,6 +25,7 @@ class ClaudeClient:
         model=DEFAULT_MODEL,
         max_tokens=DEFAULT_MAX_TOKENS,
         system=None,
+        stop_sequences=None,
         api_key=None,
     ):
         # Walk up from the current working directory to find the project's .env
@@ -33,6 +34,7 @@ class ClaudeClient:
         self.model = model
         self.max_tokens = max_tokens
         self.system = system
+        self.stop_sequences = stop_sequences
 
     # ---- message list helpers -------------------------------------------
 
@@ -58,7 +60,9 @@ class ClaudeClient:
         }
         if self.system is not None:
             params["system"] = self.system
-        # Only pass options that were actually set (e.g. temperature, stop_sequences)
+        if self.stop_sequences is not None:
+            params["stop_sequences"] = list(self.stop_sequences)
+        # Per-call options override the defaults; options left as None are not sent
         params.update({k: v for k, v in overrides.items() if v is not None})
         return params
 
