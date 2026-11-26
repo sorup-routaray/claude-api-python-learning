@@ -1,0 +1,19 @@
+{
+  "tasks": [
+    {
+      "task": "Write a Python function that takes a list of S3 object keys and returns only the keys that end with '.parquet' and are located under the 'raw/' prefix.",
+      "format": "python",
+      "solution_criteria": "Function accepts a list of strings and returns a filtered list; keeps only keys starting with 'raw/' and ending with '.parquet'; handles an empty list; uses no external dependencies beyond standard library or boto3 if needed."
+    },
+    {
+      "task": "Create a JSON IAM policy document that allows read-only access (s3:GetObject and s3:ListBucket) to the bucket 'analytics-data' and all objects within it, and nothing else.",
+      "format": "json",
+      "solution_criteria": "Valid JSON with Version '2012-10-17' and a Statement array; grants only s3:GetObject and s3:ListBucket; resource includes both 'arn:aws:s3:::analytics-data' and 'arn:aws:s3:::analytics-data/*'; Effect is 'Allow'; no wildcard actions or other services."
+    },
+    {
+      "task": "Write a regular expression that matches valid AWS EC2 instance IDs (format 'i-' followed by either 8 or 17 lowercase hexadecimal characters) found in CloudWatch log lines.",
+      "format": "regex",
+      "solution_criteria": "Matches 'i-1a2b3c4d' and 'i-0123456789abcdef0'; rejects IDs with lengths other than 8 or 17 hex characters, uppercase letters, or a missing 'i-' prefix; anchored or bounded so it does not match partial longer strings incorrectly."
+    }
+  ]
+}
